@@ -18,12 +18,10 @@ package org.jboss.arquillian.spring.deployer.dependency;
 
 import org.jboss.shrinkwrap.resolver.api.ResolutionException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -49,20 +47,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#getDependencies()}
-     * method.</p>
-     */
-    @Test
-    public void testGetDependencies() {
-
-        File[] result = instance.getDependencies();
-
-        assertNotNull("Invalid value was returned.", result);
-        assertEquals("Incorrect number of dependencies, none was expected.", 0, result.length);
-    }
-
-    /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#addDependency(String,
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String,
      * String, String, String...)} method.</p>
      */
     @Test
@@ -73,19 +58,16 @@ public class MavenDependencyBuilderTestCase {
         File[] result = instance.getDependencies();
 
         assertNotNull("Invalid value was returned.", result);
-        // the result of this test depends if it's run with a pom, the pom content overwrites the version
-        // specified by the argument
-        assertDependencyExists(result, "spring-context", "2.5.6");
+        assertDependencyExists(result, "spring-context", "3.0.0.RELEASE");
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#addDependency(String,
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String,
      * String, String, String...)} method.</p>
      *
      * <p>{@link ResolutionException} is expected.</p>
      */
     @Test(expected = ResolutionException.class)
-    @Ignore("Will not fail when run through Maven")
     public void testAddDependenciesDefaultEmptyString() {
 
         instance.addDependency("org.springframework:spring-context", null, "");
@@ -94,7 +76,7 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#addDependency(String,
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String,
      * String, String, String...)} method.</p>
      */
     @Test
@@ -107,11 +89,11 @@ public class MavenDependencyBuilderTestCase {
         assertNotNull("Invalid value was returned.", result);
         // the result of this test depends if it's run with a pom, the pom content overwrites the version
         // specified by the argument
-        assertDependencyExists(result, "spring-context", "2.5.6");
+        assertDependencyExists(result, "spring-context", "3.1.1.RELEASE");
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#addDependency(String,
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String,
      * String, String, String...)} method.</p>
      */
     @Test
@@ -125,13 +107,12 @@ public class MavenDependencyBuilderTestCase {
     }
 
     /**
-     * <p>Tests the {@link org.jboss.arquillian.spring.deployer.dependency.MavenDependencyBuilder#addDependency(String,
+     * <p>Tests the {@link MavenDependencyBuilder#addDependency(String,
      * String, String, String...)} method.</p>
      *
      * {@link ResolutionException} is expected
      */
     @Test(expected = ResolutionException.class)
-    @Ignore("Will not fail when run through Maven")
     public void testAddDependenciesError() {
 
         instance.addDependency("org.springframework:spring-context", "3", "3");
